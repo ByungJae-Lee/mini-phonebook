@@ -1,19 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useDispatch } from "react-redux";
 
 const ContactForm = () => {
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(0);
+  const dispatch = useDispatch();
+
+  const addContact = (event) => {
+    event.preventDefault();
+    dispatch({
+      type: "ADD_CONTACT",
+      payload: { name, phoneNumber },
+    });
+  };
   return (
     <div>
-      <Form>
+      <Form onSubmit={addContact}>
         <Form.Group className="mb-3" controlId="formName">
           <Form.Label>이름</Form.Label>
-          <Form.Control type="text" placeholder="이름입력" />
+          <Form.Control
+            type="text"
+            placeholder="이름입력"
+            onChange={(event) => setName(event.target.value)}
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formContact">
           <Form.Label>전화번호</Form.Label>
-          <Form.Control type="number" placeholder="전화번호입력" />
+          <Form.Control
+            type="number"
+            placeholder="전화번호입력"
+            onChange={(event) => setPhoneNumber(event.target.value)}
+          />
         </Form.Group>
 
         <Button variant="primary" type="submit">
